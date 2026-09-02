@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FamilyChat.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e46ee29bd6fb7b38a5eac98ff75d419eee0cac77")]
 [assembly: System.Reflection.AssemblyProductAttribute("FamilyChat.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FamilyChat.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
