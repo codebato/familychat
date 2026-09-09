@@ -29,31 +29,33 @@ export default function Login() {
     }
   };
 
-  return (
-    <div style={{ maxWidth: 300, margin: "100px auto" }}>
-      <h2>{isRegister ? "Kayıt Ol" : "Giriş Yap"}</h2>
+return (
+  <div className="auth-shell">
+    <div className="auth-card">
+      <h1 className="auth-title brand">{isRegister ? "Kayıt Ol" : "FamilyChat"}</h1>
+      <p className="auth-subtitle">{isRegister ? "Yeni bir hesap oluştur" : "Ailenle konuşmaya devam et"}</p>
       <form onSubmit={handleSubmit}>
         <input
+          className="field"
           placeholder="Kullanıcı adı"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ display: "block", width: "100%", marginBottom: 8 }}
         />
         <input
+          className="field"
           placeholder="Şifre"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ display: "block", width: "100%", marginBottom: 8 }}
         />
-        <button type="submit" style={{ width: "100%" }}>
+        <button className="btn-primary" type="submit">
           {isRegister ? "Kayıt Ol" : "Giriş Yap"}
         </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p onClick={() => setIsRegister(!isRegister)} style={{ cursor: "pointer", color: "blue" }}>
+      {error && <p className="auth-error">{error}</p>}
+      <p className="auth-toggle" onClick={() => setIsRegister(!isRegister)}>
         {isRegister ? "Zaten hesabın var mı? Giriş yap" : "Hesabın yok mu? Kayıt ol"}
       </p>
     </div>
-  );
-}
+  </div>
+)}
