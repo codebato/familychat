@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import { api, subscribeToPush } from "./api";
-
+import { avatarColor } from "./avatarColor";
 
 interface Message {
   id: number;
@@ -64,43 +64,63 @@ export default function Chat() {
     setText("");
   };
 
-  return (
-    <div style={{ display: "flex", maxWidth: 700, margin: "40px auto" }}>
-      <div style={{ width: 150, borderRight: "1px solid #ccc", paddingRight: 10 }}>
-        <h4>Merhaba, {myUsername}</h4>
+return (
+  <div className="app-shell">
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <p className="brand">FamilyChat</p>
+        <p className="me">{myUsername}</p>
+      </div>
+      <div className="contact-list">
         {users.map((u) => (
           <div
             key={u.id}
+            className={`contact-item ${selectedUser?.id === u.id ? "active" : ""}`}
             onClick={() => selectUser(u)}
-            style={{
-              padding: 8,
-              cursor: "pointer",
-              background: selectedUser?.id === u.id ? "#ddd" : "transparent",
-            }}
           >
-            {u.username}
+            <div className="avatar" style={{ background: avatarColor(u.username) }}>
+              {u.username[0].toUpperCase()}
+            </div>
+            <span className="contact-name">{u.username}</span>
           </div>
         ))}
       </div>
-
-      <div style={{ flex: 1, paddingLeft: 20 }}>
-        {selectedUser ? (
-          <>
-            <h4>{selectedUser.username} ile sohbet</h4>
-            <div style={{ border: "1px solid #ccc", height: 300, overflowY: "auto", padding: 10, marginBottom: 10 }}>
-              {messages.map((m) => (
-                <div key={m.id}>
-                  <b>{m.senderId === 0 ? "Ben" : selectedUser.username}:</b> {m.content}
-                </div>
-              ))}
-            </div>
-            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Mesaj yaz..." />
-            <button onClick={sendMessage}>Gönder</button>
-          </>
-        ) : (
-          <p>Sohbet etmek için soldan birini seç.</p>
-        )}
-      </div>
     </div>
-  );
-}
+
+    <div className="chat-panel">
+      {selectedUser ? (
+        <>
+          <div className="chat-header">
+            <div className="avatar" style={{ background: avatarColor(selectedUser.username) }}>
+              {selectedUser.username[0].toUpperCase()}
+            </div>
+            <span className="name">{selectedUser.username}</span>
+          </div>
+
+          <div className="messages">
+            {messages.map((m) => (
+              <div key={m.id} className={`bubble-row ${m.senderId === 0 ? "mine" : ""}`}>
+                <div className={`bubble ${m.senderId === 0 ? "sent" : "received"}`}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="composer">
+            <input
+              className="field"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Mesaj yaz..."
+            />
+            <button className="btn-send" onClick={sendMessage}>Gönder</button>
+          </div>
+        </>
+      ) : (
+        <div className="empty-state">Sohbet etmek için soldan birini seç.</div>
+      )}
+    </div>
+  </div>
+)};
